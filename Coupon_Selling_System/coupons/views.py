@@ -1,38 +1,60 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from .models import Coupon
-from datetime import datetime
-from django.db.models import Q
+import uuid
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.contrib.auth.models import User
+from .models import Wallet, Payment
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .models import Coupon, Wallet, Purchase
+
+@api_view(["POST"])
+def create_payment_order(request):
+    user = request.user
+    amount = request.data.get("amount")
+
+    if not amount:
+        return Response({"error": "Amount required"}, status=400)
+
+    razorpay_order_id = "order_" + uuid.uuid4().hex
+
+    return Response({
+        "order_id": razorpay_order_id,
+        "amount": amount,
+        "currency": "INR"
+    })
+
+@api_view(["POST"])
+def payment_success(request):
+    user = request.user
+    amount = int(request.data.get("amount"))
+    order_id = request.data.get("order_id")
+
+    wallet, _ = Wallet.objects.get_or_create(user=user)
+
+    wallet.balance += amount
+    wallet.save()
+
+    Payment.objects.create(
+        user=user,
+        amount=amount,
+        razorpay_order_id=order_id,
+        razorpay_payment_id="pay_" + uuid.uuid4().hex,
+        status="SUCCESS"
+    )
+
+    return Response({
+        "message": "Wallet recharged successfully",
+        "new_balance": wallet.balance
+    })
 
 
 
-@login_required
-def add_coupon(request):
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        brand = request.POST.get('brand')
-        discount = request.POST.get('discount')
-        category = request.POST.get('category')
-        coupon_code = request.POST.get('coupon_code')
-        price = request.POST.get('price')
-        expiry_date = request.POST.get('expiry_date')
 
-        if not all([title, brand, discount, category, coupon_code, price, expiry_date]):
-            return JsonResponse({'error': 'All fields are required'}, status=400)
-
-        Coupon.objects.create(
-            seller=request.user,
-            title=title,
-            brand=brand,
-            discount=discount,
-            category=category,
-            coupon_code=coupon_code,
-            price=price,
-            expiry_date=expiry_date
-        )
-        
-from django.utils.timezone import now
+# ✅ COUPON LIST + SEARCH + CATEGORY FILTER
+@api_view(['GET'])
 def coupon_list(request):
     coupons = Coupon.objects.filter(is_sold=False)
 
@@ -40,7 +62,7 @@ def coupon_list(request):
     search = request.GET.get('search')
 
     if category:
-        coupons = coupons.filter(category__icontains=category)
+        coupons = coupons.filter(category__iexact=category)
 
     if search:
         coupons = coupons.filter(code__icontains=search)
@@ -51,54 +73,37 @@ def coupon_list(request):
             "id": c.id,
             "code": c.code,
             "category": c.category,
-            "price": c.price,
-            "seller": c.seller.username
+            "price": c.price
         })
 
-    return JsonResponse(data, safe=False)
+    return Response(data)
 
 
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from .models import Coupon, Wallet, Transaction
-
-@login_required
+# ✅ BUY COUPON API
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def buy_coupon(request, coupon_id):
+    user = request.user
+
     try:
         coupon = Coupon.objects.get(id=coupon_id, is_sold=False)
     except Coupon.DoesNotExist:
-        return JsonResponse({"error": "Coupon not available"}, status=400)
+        return Response({"error": "Coupon not available"}, status=404)
 
-    buyer = request.user
-    seller = coupon.seller
+    wallet, _ = Wallet.objects.get_or_create(user=user)
 
-    buyer_wallet = Wallet.objects.get(user=buyer)
-    seller_wallet = Wallet.objects.get(user=seller)
+    if wallet.balance < coupon.price:
+        return Response({"error": "Insufficient balance"}, status=400)
 
-    if buyer_wallet.balance < coupon.price:
-        return JsonResponse({"error": "Insufficient balance"}, status=400)
+    wallet.balance -= coupon.price
+    wallet.save()
 
-    # 💰 WALLET TRANSFER
-    buyer_wallet.balance -= coupon.price
-    seller_wallet.balance += coupon.price
-
-    buyer_wallet.save()
-    seller_wallet.save()
-
-    # 🔒 LOCK COUPON
     coupon.is_sold = True
     coupon.save()
 
-    # 🧾 TRANSACTION
-    Transaction.objects.create(
-        buyer=buyer,
-        seller=seller,
-        coupon=coupon,
-        amount=coupon.price
-    )
+    Purchase.objects.create(user=user, coupon=coupon)
 
-    return JsonResponse({
-        "message": "Payment successful",
-        "coupon_code": coupon.code
+    return Response({
+        "message": "Coupon purchased successfully",
+        "remaining_balance": wallet.balance
     })
-

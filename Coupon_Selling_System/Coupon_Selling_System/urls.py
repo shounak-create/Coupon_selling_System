@@ -19,6 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # 👇 PURE coupons app ke URLs yaha se load honge
     path('api/', include('coupons.urls')),
 ]
+
 
