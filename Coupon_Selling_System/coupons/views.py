@@ -34,42 +34,71 @@ def add_coupon(request):
         
 from django.utils.timezone import now
 def coupon_list(request):
-    coupons = Coupon.objects.filter(
-        is_sold=False,
-        expiry_date__gte=now().date()
-    )
+    coupons = Coupon.objects.filter(is_sold=False)
 
     category = request.GET.get('category')
-    brand = request.GET.get('brand')
     search = request.GET.get('search')
 
     if category:
-        coupons = coupons.filter(category__iexact=category)
-
-    if brand:
-        coupons = coupons.filter(brand__icontains=brand)
+        coupons = coupons.filter(category__icontains=category)
 
     if search:
-        coupons = coupons.filter(
-            Q(title__icontains=search) |
-            Q(brand__icontains=search) |
-            Q(discount__icontains=search)
-        )
+        coupons = coupons.filter(code__icontains=search)
 
     data = []
-    for coupon in coupons:
+    for c in coupons:
         data.append({
-            'id': coupon.id,
-            'title': coupon.title,
-            'brand': coupon.brand,
-            'discount': coupon.discount,
-            'category': coupon.category,
-            'price': coupon.price,
-            'expiry_date': coupon.expiry_date,
-            'seller': coupon.seller.username
+            "id": c.id,
+            "code": c.code,
+            "category": c.category,
+            "price": c.price,
+            "seller": c.seller.username
         })
 
-    return JsonResponse({'coupons': data})
+    return JsonResponse(data, safe=False)
 
 
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Coupon, Wallet, Transaction
+
+@login_required
+def buy_coupon(request, coupon_id):
+    try:
+        coupon = Coupon.objects.get(id=coupon_id, is_sold=False)
+    except Coupon.DoesNotExist:
+        return JsonResponse({"error": "Coupon not available"}, status=400)
+
+    buyer = request.user
+    seller = coupon.seller
+
+    buyer_wallet = Wallet.objects.get(user=buyer)
+    seller_wallet = Wallet.objects.get(user=seller)
+
+    if buyer_wallet.balance < coupon.price:
+        return JsonResponse({"error": "Insufficient balance"}, status=400)
+
+    # 💰 WALLET TRANSFER
+    buyer_wallet.balance -= coupon.price
+    seller_wallet.balance += coupon.price
+
+    buyer_wallet.save()
+    seller_wallet.save()
+
+    # 🔒 LOCK COUPON
+    coupon.is_sold = True
+    coupon.save()
+
+    # 🧾 TRANSACTION
+    Transaction.objects.create(
+        buyer=buyer,
+        seller=seller,
+        coupon=coupon,
+        amount=coupon.price
+    )
+
+    return JsonResponse({
+        "message": "Payment successful",
+        "coupon_code": coupon.code
+    })
 

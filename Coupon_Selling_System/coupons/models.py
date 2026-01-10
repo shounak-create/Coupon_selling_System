@@ -25,3 +25,13 @@ class Wallet(models.Model):
 
     def __str__(self):
         return f"{self.user.username} Wallet"
+
+class Transaction(models.Model):
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="buyer_tx")
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller_tx")
+    coupon = models.OneToOneField(Coupon, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.buyer} bought {self.coupon.code}"
