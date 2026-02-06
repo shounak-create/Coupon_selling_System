@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealSwap | Your Premium Coupon Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<div class="top-promo-bar">
+    <div class="container text-center">
+        <span class="promo-content">
+            <span class="emoji-animate">🎉</span> 
+            <strong>Shop Now!</strong> Get up to 80% off on premium coupons 
+        </span>
+        <button type="button" class="btn-close-promo" onclick="this.parentElement.parentElement.style.display='none'">
+            &times;
+        </button>
+    </div>
+</div>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <div class="container d-flex flex-column">
+        <div class="d-flex w-100 justify-content-between align-items-center py-2">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="/">DealSwap</a>
+            <div class="flex-grow-1 mx-4">
+                <input type="text" class="form-control rounded-pill border-2" placeholder="Search for coupons, brands, categories...">
+            </div>
+            <div>
+                <a href="{% url 'login' %}" class="btn btn-link text-dark text-decoration-none fw-bold">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4 fw-bold">Sign Up</a>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-center gap-3 w-100 py-3 category-btn-group">
+            <a href="{% url 'all_coupons_page' %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <img src="https://img.icons8.com/ios/20/000000/grid.png" width="18"> All
+            </a>
+            <a href="{% url 'electronics_page' %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <img src="https://img.icons8.com/ios/20/000000/tv.png" width="18"> Electronics
+            </a>
+            <a href="{% url 'food_page' %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <img src="https://img.icons8.com/ios/20/000000/restaurant.png" width="18"> Food
+            </a>
+            <a href="{% url 'gaming_page' %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <img src="https://img.icons8.com/ios/20/000000/controller.png" width="18"> Gaming
+            </a>
+            <a href="{% url 'travel_page' %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <img src="https://img.icons8.com/ios/20/000000/airplane-take-off.png" width="18"> Travel
+            </a>
+            <a href="{% url 'shopping_page' %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <img src="https://img.icons8.com/ios/20/000000/shopping-bag.png" width="18"> Shopping
+            </a>
+        </div>
+    </div>
+</nav>
+
+    <header class="hero-section text-white d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-3 fw-bold mb-4">Discover Amazing Deals & Coupons</h1>
+                    <p class="fs-5 mb-5 opacity-75">Buy and sell verified coupons from top brands. Save money on everything you love.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="{% url 'all_coupons_page' %}" class="btn btn-light rounded-pill px-4 fw-bold">Browse Coupons</a>
+                        <a href="{% url 'list_coupon' %}" class="btn btn-outline-light rounded-pill px-4 fw-bold">List Your Coupon</a>
+                    </div>
+                    
+                    <div class="d-flex mt-5">
+                        <div class="me-4 text-center"><h3>50K+</h3><small>Active Coupons</small></div>
+                        <div class="me-4 text-center"><h3>100K+</h3><small>Happy Users</small></div>
+                        <div class="text-center"><h3>500+</h3><small>Brands</small></div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center d-none d-md-block">
+                    <div class="promo-card shadow-lg rotate-3 p-4 bg-white rounded-4 text-dark d-inline-block">
+                        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=300" class="rounded-3 mb-3">
+                        <h4 class="fw-bold">Up to 80% OFF</h4>
+                        <p class="text-muted">On premium coupons</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <h2 class="fw-bold mb-4">🔥 Featured Coupons</h2>
+        <div class="row g-4" id="couponGrid">
+            <div class="col-md-3 coupon-card-item" data-category="shopping">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3">
+                    <img src="https://img.icons8.com/color/96/amazon.png" class="mx-auto my-3" width="60">
+                    <h5 class="fw-bold">Amazon Pay</h5>
+                    <p class="text-muted small">₹500 Gift Card Voucher</p>
+                    <div class="bg-light p-2 rounded-3 fw-bold text-center mb-3">AMZ-****-SAVE</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-4 fw-bold text-primary">₹450</span>
+                        <a href="{% url 'login' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 coupon-card-item" data-category="food">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3">
+                    <img src="https://img.icons8.com/color/96/zomato.png" class="mx-auto my-3" width="60">
+                    <h5 class="fw-bold">Zomato Pro</h5>
+                    <p class="text-muted small">Flat 50% Off Voucher</p>
+                    <div class="bg-light p-2 rounded-3 fw-bold text-center mb-3">ZOM-****-GOLD</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-4 fw-bold text-primary">₹25</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 coupon-card-item" data-category="gaming">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3">
+                    <img src="https://img.icons8.com/color/96/steam.png" class="mx-auto my-3" width="60">
+                    <h5 class="fw-bold">Steam Wallet</h5>
+                    <p class="text-muted small">$10 Digital Gift Card</p>
+                    <div class="bg-light p-2 rounded-3 fw-bold text-center mb-3">STM-****-WLLT</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-4 fw-bold text-primary">₹750</span>
+                        <a href="{% url 'login' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 mb-4">
+                <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                    <div class="brand-logo-wrapper mb-3 text-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="brand-img" width="60">
+                    </div>
+                    <div class="card-body p-0 text-center">
+                        <h6 class="fw-bold mb-1">Nike</h6>
+                        <p class="text-muted small mb-3">Flat 20% Off Storewide</p>
+                        <div class="coupon-code-pill bg-light py-2 px-3 mb-3 rounded-pill">
+                            <span class="small fw-bold">NK-****-JUST</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-primary fs-5">₹150</span>
+                            <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4 btn-sm">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'core/js/script.js' %}"></script>
+
+    <section class="footer-cta-section">
+        <div class="container text-center">
+            <div class="cta-content">
+                <h2 class="fw-bold text-white mb-3">Ready to start saving?</h2>
+                <p class="text-white opacity-75 mb-4">Join our community and trade your unused coupons today.</p>
+                <a href="{% url 'login' %}" class="btn btn-cta-primary">Create an account for free!</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <a class="navbar-brand fw-bold text-white fs-4 d-block mb-3" href="{% url 'home' %}">
+                        DealSwap
+                    </a>
+                    <p class="footer-description mb-4 text-white">
+                        Your trusted marketplace for discovering and trading the best coupons, deals, and cashback offers across thousands of brands.
+                    </p>
+                    <div class="social-links d-flex gap-3">
+                        <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png"/></a>
+                        <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/twitter.png"/></a>
+                        <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png"/></a>
+                        <a href="#"><img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png"/></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="text-white fw-bold mb-4">Quick Links</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">Browse Coupons</a></li>
+                        <li><a href="{% url 'list_coupon' %}" class="text-white">List Your Coupon</a></li>
+                        <li><a href="#" class="text-white">Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h6 class="text-white fw-bold mb-4">Popular Categories</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{% url 'electronics_page' %}" class="text-white">Electronics</a></li>
+                        <li><a href="{% url 'food_page' %}" class="text-white">Food & Dining</a></li>
+                        <li><a href="{% url 'travel_page' %}" class="text-white">Travel & Hotels</a></li>
+                        <li><a href="{% url 'gaming_page' %}" class="text-white">Gaming</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="text-white fw-bold mb-4">Contact Us</h6>
+                    <ul class="list-unstyled contact-info mb-4">
+                        <li class="mb-2 text-white">
+                            <img src="https://img.icons8.com/ios/18/ffffff/marker.png" class="me-2"/> Pune, Maharashtra, India
+                        </li>
+                        <li class="mb-2 text-white">
+                            <img src="https://img.icons8.com/ios/18/ffffff/phone.png" class="me-2"/> +91 4658971231
+                        </li>
+                        <li class="mb-2 text-white">
+                            <img src="https://img.icons8.com/ios/18/ffffff/mail.png" class="me-2"/> support@dealswap.com
+                        </li>
+                    </ul>
+                    <div class="newsletter-form">
+                        <label class="text-white small mb-2 d-block">Subscribe to our newsletter</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control bg-dark border-secondary text-white" placeholder="Your email">
+                            <button class="btn btn-primary px-4 fw-bold" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="footer-divider border-white opacity-25">
+
+            <div class="footer-bottom-row d-flex justify-content-between align-items-center text-white pb-4">
+                <p class="m-0 small">© 2026 DealSwap. Made with ❤️ for shoppers.</p>
+                <div class="bottom-nav d-flex gap-3">
+                    <a href="#" class="text-white small text-decoration-none">Privacy Policy</a>
+                    <a href="#" class="text-white small text-decoration-none">Terms of Service</a>
+                    <a href="#" class="text-white small text-decoration-none">Cookie Policy</a>
+                    <a href="#" class="text-white small text-decoration-none">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+{% load static %}
+    {% block title %}All Coupons | DealSwap{% endblock %}
+    {% block extra_css %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/style1.css' %}">
+    {% endblock %}
+    {% block content %}
+<div class="py-0"> <nav class="navbar navbar-light bg-white border-bottom shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">← Back to Home</a>
+            <h5 class="fw-bold m-0 text-dark">All Available Coupons</h5>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        {% for coupon in coupons %}        
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <h6 class="fw-bold">{{coupon.title}}</h6>
+                    <div class="bg-light p-2 rounded-3 fw-bold small mb-3">{{coupon.code}}</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fw-bold text-primary">{{coupon.selling_price}}</span>
+                    </div>
+                    <a href="{% url 'coupon_detail' coupon.id %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                        <button class="btn btn-sm btn-primary rounded-pill px-3">Buy</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

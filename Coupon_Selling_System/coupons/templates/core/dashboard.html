@@ -1,0 +1,129 @@
+{% extends "core/base.html" %}
+
+
+<div class="bg-gray-50 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        {% if user_type == "seller" %}Seller Dashboard{% else %}My Dashboard{% endif %}
+      </h1>
+      <p class="text-gray-600">
+        {% if user_type == "seller" %}
+          Manage your coupons and track sales
+        {% else %}
+          View your purchases and activity
+        {% endif %}
+      </p>
+    </div>
+
+    <!-- STATS (SELLER ONLY) -->
+    {% if user_type == "seller" %}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <p class="text-2xl font-bold">$2,847</p>
+        <p class="text-sm text-gray-600">Total Earnings</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <p class="text-2xl font-bold">28</p>
+        <p class="text-sm text-gray-600">Active Coupons</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <p class="text-2xl font-bold">137</p>
+        <p class="text-sm text-gray-600">Total Sales</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <p class="text-2xl font-bold">4.8</p>
+        <p class="text-sm text-gray-600">Average Rating</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- TABS -->
+    <div class="bg-white rounded-xl shadow-sm mb-6">
+      <div class="border-b px-6 flex space-x-8">
+
+        {% if user_type == "seller" %}
+        <a href="?tab=listed"
+           class="py-4 border-b-2 {% if tab == 'listed' %}border-blue-600 text-blue-600{% else %}border-transparent text-gray-500{% endif %}">
+          My Listed Coupons
+        </a>
+        {% endif %}
+
+        <a href="?tab=purchases"
+           class="py-4 border-b-2 {% if tab == 'purchases' %}border-blue-600 text-blue-600{% else %}border-transparent text-gray-500{% endif %}">
+          {% if user_type == "seller" %}My Purchases{% else %}Purchase History{% endif %}
+        </a>
+
+        <a href="?tab=activity"
+           class="py-4 border-b-2 {% if tab == 'activity' %}border-blue-600 text-blue-600{% else %}border-transparent text-gray-500{% endif %}">
+          Recent Activity
+        </a>
+
+      </div>
+
+      <!-- TAB CONTENT -->
+      <div class="p-6">
+
+        <!-- LISTED COUPONS -->
+        {% if tab == "listed" and user_type == "seller" %}
+        <div>
+          <div class="flex justify-between mb-6">
+            <h2 class="text-xl font-semibold">My Listed Coupons</h2>
+            <a href="{% url 'add_coupon' %}"
+               class="px-4 py-2 bg-blue-600 text-white rounded-lg">Add New Coupon</a>
+          </div>
+
+          {% for c in listed_coupons %}
+          <div class="border rounded-lg p-4 mb-4">
+            <h3 class="font-semibold">{{ c.title }}</h3>
+            <p class="text-sm text-gray-600">
+              ${{ c.price }} • {{ c.views }} views • {{ c.sales }} sales • ⭐ {{ c.rating }}
+            </p>
+            <p class="text-sm text-gray-500">Listed {{ c.listed_date }}</p>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- PURCHASES -->
+        {% if tab == "purchases" %}
+        <div>
+          <h2 class="text-xl font-semibold mb-6">
+            {% if user_type == "seller" %}My Purchases{% else %}Purchase History{% endif %}
+          </h2>
+
+          {% for p in purchases %}
+          <div class="border rounded-lg p-4 mb-4">
+            <h3 class="font-semibold">{{ p.title }}</h3>
+            <p class="text-sm text-gray-600">
+              ${{ p.price }} • Purchased {{ p.purchase_date }}
+            </p>
+            <p class="font-mono text-sm">Code: {{ p.code }}</p>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- ACTIVITY -->
+        {% if tab == "activity" %}
+        <div>
+          <h2 class="text-xl font-semibold mb-6">Recent Activity</h2>
+
+          {% for a in activity %}
+          <div class="border rounded-lg p-4 mb-4">
+            <p>{{ a.message }}</p>
+            <p class="text-sm text-gray-500">{{ a.time }}</p>
+          </div>
+          {% empty %}
+          <p>No recent activity.</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+</div>

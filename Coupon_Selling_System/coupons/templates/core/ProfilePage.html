@@ -1,0 +1,200 @@
+{% extends "core/base.html" %}
+{% load static %}
+  {% block title %}My Profile{% endblock %}
+
+  <!-- Tailwind CSS -->
+  {% block extra_css %}
+  <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/style1.css' %}">
+  <!-- Lucide Icons -->
+   <script src="https://unpkg.com/lucide@latest"></script> 
+{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen">
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
+    <p class="text-gray-600">Manage your account information and preferences</p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+
+    <!-- LEFT PROFILE CARD -->
+    <div class="lg:col-span-1">
+
+      <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+        <div class="relative inline-block mb-4">
+          <div class="bg-gradient-to-r from-blue-600 to-purple-600 w-32 h-32 rounded-full flex items-center justify-center">
+            <i data-lucide="user" class="w-16 h-16 text-white"></i>
+          </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-900 mb-1">{{ user.first_name }}</h2>
+        <p class="text-gray-600 mb-4">{{ user.first_name }}</p>
+
+        <div class="bg-gray-50 rounded-lg p-4 mb-4 text-sm">
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-600">Member Since</span>
+            <span class="font-semibold">Jan 2024</span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-600">Account Type</span>
+            <span class="font-semibold text-purple-600">Seller</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Verification</span>
+            <span class="font-semibold text-green-600">✓ Verified</span>
+          </div>
+        </div>
+
+        <button class="w-full px-4 py-2 border rounded-lg hover:bg-gray-50 text-sm">
+          View Public Profile
+        </button>
+      </div>
+
+      <!-- STATS -->
+      <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+        <h3 class="font-semibold mb-4">Quick Stats</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between"><span>Total Sales</span><span>137</span></div>
+          <div class="flex justify-between"><span>Active Listings</span><span>28</span></div>
+          <div class="flex justify-between"><span>Total Earnings</span><span class="text-green-600">$2,847</span></div>
+          <div class="flex justify-between"><span>Rating</span><span class="text-yellow-600">4.8 ⭐</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="lg:col-span-2">
+
+      <!-- ACCOUNT INFO -->
+      <form method="POST" class="bg-white rounded-xl shadow-sm p-6">
+        {% csrf_token %}
+
+        <div class="flex justify-between mb-6">
+          <h2 class="text-xl font-semibold">Account Information</h2>
+
+          {% if not is_editing %}
+            <a href="?edit=true"
+               class="px-4 py-2 bg-blue-600 text-white rounded-lg">Edit Profile</a>
+          {% else %}
+            <div class="flex gap-2">
+              <button type="submit"
+                      class="px-4 py-2 bg-green-600 text-white rounded-lg">
+                Save
+              </button>
+              <a href="{% url 'profile' %}"
+                 class="px-4 py-2 border rounded-lg">
+                Cancel
+              </a>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="space-y-6">
+
+          <!-- NAME -->
+          <div>
+            <label class="block text-sm font-medium mb-2">Full Name</label>
+            {% if is_editing %}
+              <input type="text" name="name" value="{{ user.name }}"
+                     class="w-full px-4 py-3 border rounded-lg">
+            {% else %}
+              <p class="px-4 py-3 bg-gray-50 rounded-lg">{{ user.first_name  }}</p>
+            {% endif %}
+          </div>
+
+          <!-- EMAIL -->
+          <div>
+            <label class="block text-sm font-medium mb-2">Email</label>
+            {% if is_editing %}
+              <input type="email" name="email" value="{{ user.email }}"
+                     class="w-full px-4 py-3 border rounded-lg">
+            {% else %}
+              <p class="px-4 py-3 bg-gray-50 rounded-lg">{{ user.user }}</p>
+            {% endif %}
+          </div>
+
+          <!-- PHONE -->
+          <!-- <div>
+            <label class="block text-sm font-medium mb-2">Phone</label>
+            {% if is_editing %}
+              <input type="text" name="phone" value="{{ user.phone }}"
+                     class="w-full px-4 py-3 border rounded-lg">
+            {% else %}
+              <p class="px-4 py-3 bg-gray-50 rounded-lg">{{ user.phone }}</p>
+            {% endif %}
+          </div>
+
+           LOCATION
+          <div>
+            <label class="block text-sm font-medium mb-2">Location</label>
+            {% if is_editing %}
+              <input type="text" name="location" value="{{ user.location }}"
+                     class="w-full px-4 py-3 border rounded-lg">
+            {% else %}
+              <p class="px-4 py-3 bg-gray-50 rounded-lg">{{ user.location }}</p>
+            {% endif %}
+          </div>
+
+          BIO
+          <div>
+            <label class="block text-sm font-medium mb-2">Bio</label>
+            {% if is_editing %}
+              <textarea name="bio" rows="4"
+                        class="w-full px-4 py-3 border rounded-lg">{{ user.bio }}</textarea>
+            {% else %}
+              <p class="px-4 py-3 bg-gray-50 rounded-lg">{{ user.bio }}</p>
+            {% endif %}
+          </div> -->
+
+        </div>
+      </form>
+
+      <!-- SECURITY -->
+      <!-- <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+        <h2 class="text-xl font-semibold mb-6">Security Settings</h2>
+
+        <div class="space-y-4 text-sm">
+          <div class="flex justify-between border-b pb-3">
+            <div>
+              <p class="font-medium">Password</p>
+              <p class="text-gray-600">Last changed 30 days ago</p>
+            </div>
+            <button class="border px-4 py-2 rounded-lg">Change</button>
+          </div>
+
+          <div class="flex justify-between border-b pb-3">
+            <div>
+              <p class="font-medium">Two-Factor Authentication</p>
+              <p class="text-gray-600">Extra security</p>
+            </div>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg">Enable</button>
+          </div>
+        </div>
+      </div>
+
+       DANGER
+      <div class="bg-white rounded-xl shadow-sm p-6 mt-6 border-2 border-red-200">
+        <h2 class="text-xl font-semibold text-red-600 mb-4">Danger Zone</h2>
+        <button class="bg-red-600 text-white px-4 py-2 rounded-lg">
+          Delete Account
+        </button>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+
+
+{% endblock %}

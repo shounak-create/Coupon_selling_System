@@ -1,0 +1,164 @@
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fdfdfd;
+background: linear-gradient(135deg, #4361ee 0%, #9b22ea 50%, #d91baf 100%);
+
+}
+
+/* --- NEW CATEGORY BUTTONS CSS --- */
+.category-btn-group .btn {
+    transition: all 0.3s ease;
+    border: 1.5px solid #e2e8f0;
+    background-color: #ffffff;
+    color: #475569;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-btn-group .btn:hover {
+    transform: translateY(-2px);
+    border-color: #4361ee;
+    color: #4361ee;
+    background-color: #f8faff;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
+}
+
+.category-btn-group .btn img {
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.category-btn-group .btn:hover img {
+    filter: grayscale(0%);
+}
+
+/* Gradient Hero Section */
+.hero-section {
+    height: 60vh;
+    background: linear-gradient(135deg, #4361ee 0%, #b5179e 50%, #f72585 100%);
+    clip-path: ellipse(150% 100% at 50% 0%);
+    margin-bottom: 50px;
+}
+
+/* Coupon Cards */
+.card { transition: transform 0.3s ease; border: 1px solid rgba(0,0,0,0.05); }
+.card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important; }
+
+.rotate-3 { transform: rotate(3deg); }
+
+/* Container to equalize brand logo displays */
+.brand-logo-wrapper {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.brand-img {
+    max-height: 110%;
+    max-width: 80%;
+    object-fit: contain;
+}
+
+.coupon-code-pill {
+    border: 1px dashed #cbd5e1;
+    color: #64748b;
+}
+
+/* Premium Top Promo Bar */
+.top-promo-bar {
+    background: linear-gradient(90deg, #6366f1 0%, #a855f7 50%, #6366f1 100%);
+    background-size: 200% auto;
+    color: white;
+    padding: 8px 0;
+    font-size: 14px;
+    position: relative;
+    animation: gradientShift 5s ease infinite;
+    z-index: 1050;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
+/* Premium Footer Styling */
+.main-footer {
+    background: #0b1120;
+    padding-top: 60px;
+    margin-top: 50px;
+}
+
+.main-footer h6, 
+.main-footer p, 
+.main-footer li, 
+.main-footer a {
+    color: #ffffff !important; 
+    opacity: 0.95;
+    text-decoration: none;
+}
+
+.footer-bottom-row {
+    font-size: 13px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 25px;
+}
+
+/* CTA Section Styling */
+.footer-cta-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border-radius: 20px;
+    margin-bottom: -80px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-cta-primary {
+    background-color: #ffffff;
+    color: #6366f1 !important;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+
+/* Electronics Page Specifics */
+.bg-light {
+    background-color: #f8fafc !important;
+}
+
+.form-check-input:checked {
+    background-color: #4361ee;
+    border-color: #4361ee;
+}
+
+.form-range::-webkit-slider-thumb {
+    background: #4361ee;
+}
+
+.brand-logo-wrapper {
+    background: #f1f5f9;
+    border-radius: 15px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.coupon-code-pill {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    font-family: monospace;
+    font-weight: bold;
+    color: #1e293b;
+}
+

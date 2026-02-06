@@ -1,0 +1,75 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+  {% block title %}Coupon detail{% endblock %}
+
+  {% block extra_css %}
+  <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/style1.css' %}">
+  <!-- Lucide Icons -->
+   <script src="https://unpkg.com/lucide@latest"></script> 
+{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="{% url 'home' %}">Home</a> →
+      <a href="{% url 'list_coupon' %}">Coupons</a> →
+      <span>{{ coupon.title }}</span>
+    </div>
+
+    <div class="grid-main">
+
+      <!-- LEFT -->
+      <div class="content">
+
+        <h1>{{ coupon.title }}</h1>
+        <p class="muted">{{ coupon.category }}</p>
+
+        <p>{{ coupon.description }}</p>
+
+        <h3>Terms</h3>
+        <ul>
+            <li>{{ coupon.terms }}</li>
+        </ul>
+
+        <h3>Seller</h3>
+        <p>{{ coupon.first_name }}</p>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="sidebar">
+
+        <div class="price-box">
+          <h2>${{ coupon.selling_price }}</h2>
+          {% if coupon.original_price %}
+            <del>${{ coupon.original_price }}</del>
+          {% endif %}
+        </div>
+
+        {% if purchased %}
+          <div class="success-box">
+            <strong>Coupon Code:</strong>
+            <input value="{{ coupon.coupon_code }}" readonly>
+          </div>
+        {% else %}
+          <div method="POST">
+            {% csrf_token %}
+            <a href="{% url 'checkout_page' coupon.id %}" class="btn rounded-pill px-4 fw-bold shadow-sm">
+                <button class="btn-primary">Purchase Coupon</button>
+            </a>
+          </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Deals | DealSwap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <style>
+        body {
+            /* Consistent with DealSwap premium theme */
+            background: linear-gradient(135deg, #4361ee 0%, #b5179e 50%, #f72585 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        h2.fw-bold {
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Modern glass effect */
+            backdrop-filter: blur(5px);
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-light bg-white border-bottom shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">← Back to Home</a>
+            <h5 class="fw-bold m-0 text-dark">Travel & Hotels</h5>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <h2 class="fw-bold mb-4">✈️ Best Traveling Deals</h2>
+        <div class="row g-4">
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <div class="brand-logo-wrapper mb-3">
+                        <img src="data:image/png;base64,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" class="brand-img" alt="MakeMyTrip">
+                    </div>
+                    <h5 class="fw-bold">MakeMyTrip</h5>
+                    <p class="text-muted small">Flat ₹2000 Off on International Flights</p>
+                    <div class="bg-light p-2 rounded-3 fw-bold text-center mb-3">MMT-****-FLIGHT</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fs-4 fw-bold text-primary">₹150</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <div class="brand-logo-wrapper mb-3">
+                        <img src="https://img.icons8.com/color/96/airbnb.png" class="brand-img" alt="Airbnb">
+                    </div>
+                    <h5 class="fw-bold">Airbnb</h5>
+                    <p class="text-muted small">15% Off on your first Villa booking</p>
+                    <div class="bg-light p-2 rounded-3 fw-bold text-center mb-3">BNB-****-STAY</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fs-4 fw-bold text-primary">₹300</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <div class="brand-logo-wrapper mb-3">
+                        <img src="https://img.icons8.com/color/96/uber-app.png" class="brand-img" alt="Uber">
+                    </div>
+                    <h5 class="fw-bold">Uber Intercity</h5>
+                    <p class="text-muted small">Flat 25% Off on Airport Rentals</p>
+                    <div class="bg-light p-2 rounded-3 fw-bold text-center mb-3">UBR-****-RIDE</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fs-4 fw-bold text-primary">₹50</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
