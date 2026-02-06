@@ -1,0 +1,115 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+  <div class="ds-container">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+      <!-- <h1>
+        {% if user_type == "seller" %}
+          Seller Dashboard
+        {% else %}
+        {% endif %}
+      </h1> -->
+      <h1>
+        My Dashboard
+      </h1>
+      <!-- <p>
+        {% if user_type == "seller" %}
+          Manage your coupons and track sales
+        {% else %}
+          View your purchases and activity
+        {% endif %}
+      </p> -->
+    </div>
+
+    <!-- STATS -->
+    <div class="dashboard-stats">
+      <div class="stat-box">
+        <div class="stat-value">₹{{ total_earnings }}</div>
+        <div class="stat-label">Total Earnings</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-value"></div>
+        <div class="stat-label">Active Coupons</div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-value">{{ avg_rating }}</div>
+        <div class="stat-label">Avg Rating</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="dashboard-tabs">
+      <div class="dashboard-tab-links">
+        <a href="?tab=listed" class="{% if tab == 'listed' %}active{% endif %}">
+          My Listed Coupons
+        </a>
+        {% comment %} <a href="?tab=purchases" class="{% if tab == 'purchases' %}active{% endif %}">
+          Purchase History
+        </a>
+        <a href="?tab=activity" class="{% if tab == 'activity' %}active{% endif %}">
+          Recent Activity
+        </a> {% endcomment %}
+      </div>
+
+      <div class="dashboard-content">
+
+        <!-- LISTED COUPONS -->
+          {% for coupon in mycoupons %}
+            <div class="dashboard-card">
+              <h3>{{ coupon.title }}</h3>
+              <p>Code: {{ coupon.code }}</p>
+              <p>Status: {{ coupon.status }}</p>
+              <p>Price: ₹{{ coupon.price }}</p>
+              <p>Views: {{ coupon.views }} | Sales: {{ coupon.sales }}</p>
+              <p>Rating: {{ coupon.rating }}</p>
+              <p class="muted">Listed {{ coupon.listed_date }}</p>
+            </div>
+          {% empty %}
+            <p class="dashboard-empty">No coupons listed yet.</p>
+          {% endfor %}
+        
+
+        <!-- PURCHASES -->
+          {% for purchase in bought_coupons %}
+            <div class="dashboard-card">
+              <h3>{{ purchase.title }}</h3>
+              <p>Price: ₹{{ purchase.price }}</p>
+              <p>Purchased on {{ purchase.purchase_date }}</p>
+              <p class="code">{{ purchase.code }}</p>
+            </div>
+          {% empty %}
+            <p class="dashboard-empty">No purchases found.</p>
+          {% endfor %}
+
+        <!-- ACTIVITY -->
+        <!-- {% if tab == "activity" %}
+          {% for activity in recent_activity %}
+            <div class="dashboard-card">
+              <p>{{ activity.message }}</p>
+              <p class="muted">{{ activity.time }}</p>
+            </div>
+          {% empty %}
+            <p class="dashboard-empty">No recent activity.</p>
+          {% endfor %}
+        {% endif %} -->
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "core/base.html" %} {% load static %} {% block title %}Checkout |
+DealSwap{% endblock %} {% block extra_css %}
+
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}" />
+<link rel="stylesheet" href="{% static 'core/style1.css' %}" />
+<link rel="stylesheet" href="{% static 'core/buyingpage.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="container checkout-container">
+  <div class="text-center mb-5">
+    <a href="/" class="text-decoration-none"
+      ><h2 class="fw-800 text-primary">DealSwap</h2></a
+    >
+    <p class="text-muted">Complete your purchase securely</p>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card p-4 h-100">
+        <h5 class="fw-bold mb-4">Item Details</h5>
+        <div class="d-flex align-items-center mb-4 p-3 bg-light rounded-4">
+          <!-- <img src="https://img.icons8.com/color/96/amazon.png" class="brand-badge me-3"> -->
+          <div>
+            <h6 class="fw-bold mb-1">{{ coupon.title }}</h6>
+            <p class="text-muted small mb-0">{{ coupon.description }}</p>
+            <p class="text-muted small mb-0">{{ coupon.brand }}</p>
+            <p class="text-muted small mb-0">{{ coupon.original_price }}</p>
+            <p class="text-muted small mb-0">{{ coupon.selling_price }}</p>
+            <p class="text-muted small mb-0">{{ coupon.valid_until }}</p>
+          </div>
+        </div>
+
+        <h6 class="fw-bold mb-3">Redemption Instructions</h6>
+        <ul class="text-muted small">
+          <li>{{ coupon.terms }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card p-4">
+        <h5 class="fw-bold mb-4">Order Summary</h5>
+
+        <div class="price-row">
+          <span>Coupon Price</span>
+          <span>₹{{ coupon.selling_price }}</span>
+        </div>
+        <div class="price-row">
+          <span>GST (18%)</span>
+          <span>₹{{ gst }}</span>
+        </div>
+        <div class="price-row">
+          <span>Platform Fee</span>
+          <span class="text-success">FREE</span>
+        </div>
+        <div class="price-row">
+          <span>Discount</span>
+          <span class="text-success">- ₹{{ coupon.discount_percent }}</span>
+        </div>
+
+        <div class="price-row total-row">
+          <span>Total Amount</span>
+          <span class="text-primary">₹{{ total }}</span>
+        </div>
+
+        <div class="mt-4">
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="terms"
+              checked
+            />
+            <label class="form-check-label small text-muted" for="terms">
+              I agree to the Terms of Service and Refund Policy.
+            </label>
+          </div>
+          <button id="payBtn" class="btn gradient-btn w-100 py-3 rounded-pill shadow">
+            Proceed to Pay ₹{{ total }}
+          </button>
+        </div>
+
+        <div class="text-center mt-4">
+          <img src="https://img.icons8.com/color/48/visa.png" width="35" />
+          <img
+            src="https://img.icons8.com/color/48/mastercard.png"
+            width="35"
+            class="mx-2"
+          />
+          <img src="https://img.icons8.com/color/48/upi.png" width="35" />
+          <p class="text-muted small mt-2">
+            <img
+              src="https://img.icons8.com/material-rounded/16/6c757d/lock.png"
+            />
+            Secure SSL Encryption
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById("payBtn").addEventListener("click", function () {
+
+  // Optional: prevent click if terms unchecked
+  const terms = document.getElementById("terms");
+  if (!terms.checked) {
+    alert("Please accept the terms and conditions.");
+    return;
+  }
+
+  fetch("{% url 'buy_coupon' coupon.id %}", {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}",
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => {
+    // If Django returns a redirect (dashboard)
+    if (response.redirected) {
+      window.location.href = response.url;
+      return;
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (!data) return;
+
+    if (data.error) {
+      alert(data.error);
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    alert("Something went wrong. Please try again.");
+  });
+
+});
+</script>
+
+{% endblock %}

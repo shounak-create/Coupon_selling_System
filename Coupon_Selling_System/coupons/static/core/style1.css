@@ -1,0 +1,296 @@
+/* ===== BASE ===== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #4361ee 0%, #9b22ea 50%, #d91baf 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 16px;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.top-banner {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding: 8px 36px 8px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.search-box button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #444;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+}
+
+.btn-gradient {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: #111827;
+  color: #d1d5db;
+  padding: 48px 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.footer-text {
+  font-size: 14px;
+  margin: 16px 0;
+}
+
+.social-icons a {
+  margin-right: 12px;
+  color: #9ca3af;
+}
+
+.footer-bottom {
+  border-top: 1px solid #1f2937;
+  margin-top: 32px;
+  padding-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-menu-btn { display: block; }
+  .search-desktop { display: none; }
+}
+
+/* ===== Add Coupon Page ===== */
+.page-wrapper {
+  background: #f9fafb;
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+.form-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.form-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.form-header p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.form-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.mono {
+  font-family: monospace;
+}
+
+.info-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 24px;
+}
+
+.info-box ul {
+  margin-top: 8px;
+  padding-left: 18px;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 14px;
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-secondary {
+  padding: 14px 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #374151;
+  background: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* This adds the matching gradient background from your listing page */
+        body { 
+            background: linear-gradient(135deg, #4361ee 0%, #9b22ea 50%, #d91baf 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        /* Ensuring the navbar looks clean against the gradient */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        /* Styling the section headers to be readable on the dark background */
+        h3.fw-bold {
+            color: white;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Ensuring cards stay white and crisp */
+        .card {
+            background: white;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .brand-logo-wrapper img {
+            max-height: 60px;
+            object-fit: contain;
+        }

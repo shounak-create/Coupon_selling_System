@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food & Dining Deals | DealSwap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <style>
+        body {
+            /* Matches the website's primary theme */
+            background: linear-gradient(135deg, #4361ee 0%, #b5179e 50%, #f72585 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        h2.fw-bold {
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.9); /* Glassmorphism effect */
+            backdrop-filter: blur(5px);
+            border: none !important;
+        }
+
+        .coupon-code-pill {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-light bg-white border-bottom shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">← Back to Home</a>
+            <h5 class="fw-bold m-0 text-dark">Food & Dining</h5>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <h2 class="fw-bold mb-4">🍕 Delicious Food Deals</h2>
+        <div class="row g-4">
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <div class="brand-logo-wrapper mb-3">
+                        <img src="data:image/png;base64,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" class="brand-img" alt="Zomato">
+                    </div>
+                    <h5 class="fw-bold">Zomato Gold</h5>
+                    <p class="text-muted small">Flat 50% Off on Dining & Delivery</p>
+                    <div class="coupon-code-pill py-2 rounded-3 mb-3">ZOM-****-GOLD</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fs-4 fw-bold text-primary">₹25</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <div class="brand-logo-wrapper mb-3">
+                        <img src="https://img.icons8.com/color/96/starbucks.png" class="brand-img" alt="Starbucks">
+                    </div>
+                    <h5 class="fw-bold">Starbucks Coffee</h5>
+                    <p class="text-muted small">Buy 1 Get 1 Free on Beverages</p>
+                    <div class="coupon-code-pill py-2 rounded-3 mb-3">SBUX-****-BOGO</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fs-4 fw-bold text-primary">₹120</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 text-center">
+                    <div class="brand-logo-wrapper mb-3">
+                        <img src="data:image/png;base64,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" class="brand-img" alt="Dominos">
+                    </div>
+                    <h5 class="fw-bold">Domino's Pizza</h5>
+                    <p class="text-muted small">Flat ₹100 Off on orders above ₹400</p>
+                    <div class="coupon-code-pill py-2 rounded-3 mb-3">DOM-****-PIZZA</div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="fs-4 fw-bold text-primary">₹40</span>
+                        <a href="{% url 'signup' %}" class="btn btn-primary rounded-pill px-4">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
