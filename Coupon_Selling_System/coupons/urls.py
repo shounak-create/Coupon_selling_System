@@ -1,33 +1,31 @@
 from django.urls import path
-from .views import (
-    coupon_list,
-    buy_coupon,
-    CreateOrderAPIView,
-    payment_success
-)
 from . import views
 
-
 urlpatterns = [
-    # Coupons
-    path("coupons/", coupon_list, name="coupon_list"),
-    path("buy/<int:coupon_id>/", buy_coupon, name="buy_coupon"),
+    path("coupons/", views.coupon_list),
+    # path("my-coupons/", views.my_coupons),
+    path("buy/<int:coupon_id>/", views.buy_coupon),
 
-    # Payment (Dummy Razorpay)
-    path(
-        "payment/create-order/",
-        CreateOrderAPIView.as_view(),
-        name="create_payment_order"
-    ),
-    path(
-        "payment/success/",
-        payment_success,
-        name="payment_success"
-    ),
-    path("my-coupons/", views.my_coupons),
-    path("my-purchases/", views.my_purchases),
-    path("wallet/", views.wallet_balance),
-    path("transactions/", views.transaction_history),
-    path("earnings/", views.seller_earnings),
-    
+    path("payment/create-order/", views.CreateOrderAPIView.as_view()),
+    path("payment/success/", views.payment_success),
+
+    path('', views.home, name='home'),
+    path('browse/<str:category_name>/', views.browse_category, name='browse_category'),
+    path('electronics/', views.electronics_view, name='electronics_page'),
+    path('food/', views.food_view, name='food_page'),
+    path('gaming/', views.gaming_view, name='gaming_page'),
+    path('travel/', views.travel_view, name='travel_page'),
+    path('shopping/', views.shopping_view, name='shopping_page'),
+    path('all-coupons/', views.all_coupons_view, name='all_coupons_page'),
+    path("coupon/<int:coupon_id>/", views.coupon_detail_view, name="coupon_detail"),
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path("logout/", views.logout_view, name="logout"),
+    path('list_coupon/', views.list_coupon_view, name='list_coupon'),
+    path('add_coupon/', views.addcouponview, name='add_coupon'),
+    path('dashboard/',views.dashboard,name="dashboard"),
+    path('profile/',views.profile_page,name="profile"),
+    path("checkout/<int:coupon_id>/",views.checkout_page,name="checkout_page"),
+    path('buy/<int:coupon_id>/', views.buy_coupon, name='buy_coupon'),
+
 ]
